@@ -1,8 +1,4 @@
 // js/firebase-config.js
-// إعدادات Firebase الكاملة لمشروع "قالبك"
-// تأكدي من أن قواعد الأمان في Realtime Database تسمح بالقراءة العامة (".read": true)
-
-// إعدادات Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyCT0GTVZSv3d48qP3_2auOtibkjD00cUMA",
   authDomain: "gomrka-420d0.firebaseapp.com",
@@ -14,9 +10,6 @@ const firebaseConfig = {
   measurementId: "G-61DFP9M8BQ"
 };
 
-// تهيئة Firebase
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
-const storage = firebase.storage();
-
-console.log("✅ Firebase Connected: gomrka-420d0");
+console.log("✅ Firebase Connected");
