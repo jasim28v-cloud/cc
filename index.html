@@ -3,108 +3,324 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>قالبك - قوالب جاهزة للبيع | USDT</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <title>🎬 Vidora - منصة الفيديو الأولى</title>
+    
+    <!-- Plyr CSS - مشغل فيديو احترافي -->
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+    <!-- Font Awesome للأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    
     <style>
-        body { font-family: 'Tajawal', sans-serif; background: #fff; }
-        .template-card { border: 1px solid #e5e7eb; transition: all 0.3s; }
-        .template-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05); border-color: #2563eb; }
-        .btn-primary { background: #2563eb; }
-        .btn-primary:hover { background: #1d4ed8; }
-        .modal { background: rgba(0,0,0,0.4); backdrop-filter: blur(4px); }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #0a0a0a; color: #fff; min-height: 100vh; display: flex; flex-direction: column; }
+        
+        /* ========== Header ========== */
+        .header { background: rgba(26, 26, 26, 0.95); backdrop-filter: blur(10px); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 28px; font-weight: bold; background: linear-gradient(45deg, #ff4081, #ff8a80); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .logo i { margin-left: 8px; -webkit-text-fill-color: #ff4081; }
+        
+        .auth-buttons { display: flex; gap: 15px; align-items: center; }
+        .user-area { display: flex; align-items: center; gap: 15px; }
+        .user-name { color: #ff4081; font-weight: bold; }
+        
+        button { padding: 10px 20px; border-radius: 30px; border: none; cursor: pointer; font-weight: bold; transition: all 0.3s; font-size: 14px; }
+        .btn-primary { background: #ff4081; color: white; }
+        .btn-primary:hover { background: #e91e63; transform: scale(1.05); }
+        .btn-outline { background: transparent; border: 1px solid #ff4081; color: #ff4081; }
+        .btn-outline:hover { background: #ff4081; color: white; }
+        .btn-danger { background: #f44336; color: white; }
+        .btn-danger:hover { background: #d32f2f; }
+        .btn-sm { padding: 5px 15px; font-size: 12px; }
+
+        /* ========== Main Layout ========== */
+        .main-container { display: flex; max-width: 1600px; margin: 0 auto; width: 100%; flex: 1; }
+        
+        /* Admin Sidebar */
+        .admin-sidebar { width: 300px; background: #1a1a1a; border-left: 1px solid #333; padding: 20px; display: none; }
+        .admin-sidebar h3 { color: #ff4081; margin-bottom: 20px; }
+        .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 30px; }
+        .stat-card { background: #2a2a2a; padding: 15px; border-radius: 12px; text-align: center; }
+        .stat-number { font-size: 24px; font-weight: bold; color: #ff4081; }
+        .section-title { font-size: 16px; margin: 20px 0 10px; color: #aaa; }
+        .member-list, .video-list { max-height: 400px; overflow-y: auto; }
+        .member-item, .admin-video-item { background: #2a2a2a; padding: 10px; border-radius: 8px; margin-bottom: 8px; font-size: 14px; display: flex; justify-content: space-between; align-items: center; }
+        
+        /* Content Area */
+        .content-area { flex: 1; padding: 30px; }
+        
+        /* Guest Message */
+        .guest-message { background: linear-gradient(135deg, #ff4081, #e91e63); padding: 20px; border-radius: 16px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; animation: slideDown 0.5s ease; }
+        .guest-message p { margin: 0; font-size: 18px; }
+        
+        /* Upload Section */
+        .upload-section { background: #1a1a1a; border-radius: 16px; padding: 30px; margin-bottom: 40px; border: 2px dashed #444; display: none; }
+        .upload-section h2 { margin-bottom: 20px; }
+        
+        /* Video Grid */
+        .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
+        .video-card { background: #1a1a1a; border-radius: 16px; overflow: hidden; transition: all 0.3s; border: 1px solid #2a2a2a; cursor: pointer; animation: fadeIn 0.5s ease; }
+        .video-card:hover { transform: translateY(-8px); border-color: #ff4081; box-shadow: 0 10px 30px rgba(255, 64, 129, 0.2); }
+        .thumbnail-container { position: relative; padding-top: 56.25%; background: #000; }
+        .thumbnail { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+        .card-info { padding: 15px; }
+        .video-title { font-weight: bold; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .video-meta { font-size: 12px; color: #aaa; display: flex; justify-content: space-between; margin-bottom: 10px; }
+        .video-stats { display: flex; gap: 15px; color: #aaa; font-size: 13px; }
+        .video-stats i { margin-left: 5px; }
+        .like-btn { color: #aaa; transition: all 0.3s; cursor: pointer; }
+        .like-btn:hover, .like-btn.liked { color: #ff4081; }
+        .delete-btn { position: absolute; top: 10px; right: 10px; background: rgba(244, 67, 54, 0.9); color: white; border: none; border-radius: 50%; width: 35px; height: 35px; cursor: pointer; display: none; align-items: center; justify-content: center; z-index: 10; }
+        .video-card:hover .delete-btn { display: flex; }
+        
+        /* ========== Modal ========== */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 1000; overflow-y: auto; }
+        .modal-content { max-width: 1200px; margin: 20px auto; padding: 20px; }
+        .video-container { background: #000; border-radius: 16px; overflow: hidden; margin-bottom: 20px; }
+        .video-info-panel { background: #1a1a1a; border-radius: 16px; padding: 25px; }
+        .video-title-large { font-size: 24px; margin-bottom: 15px; }
+        .video-actions { display: flex; gap: 20px; margin: 20px 0; padding-bottom: 20px; border-bottom: 1px solid #333; }
+        .action-btn { display: flex; align-items: center; gap: 8px; padding: 12px 24px; background: #2a2a2a; border-radius: 40px; cursor: pointer; transition: all 0.3s; }
+        .action-btn:hover { background: #3a3a3a; }
+        .action-btn.liked { background: #ff4081; color: white; }
+        
+        /* Comments Section */
+        .comments-section { margin-top: 20px; }
+        .comments-title { font-size: 18px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .comment-form { display: flex; gap: 10px; margin-bottom: 25px; }
+        .comment-input { flex: 1; padding: 14px; background: #2a2a2a; border: 1px solid #444; color: white; border-radius: 30px; }
+        .comment-list { max-height: 400px; overflow-y: auto; }
+        .comment-item { display: flex; gap: 12px; padding: 15px 0; border-bottom: 1px solid #2a2a2a; }
+        .comment-avatar { width: 40px; height: 40px; border-radius: 50%; background: #ff4081; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .comment-content { flex: 1; }
+        .comment-author { font-weight: bold; margin-bottom: 5px; color: #ff4081; }
+        .comment-text { color: #ddd; margin-bottom: 5px; }
+        .comment-time { font-size: 11px; color: #666; }
+        
+        .close-modal { position: fixed; top: 20px; left: 20px; color: white; font-size: 30px; cursor: pointer; z-index: 1001; background: rgba(0,0,0,0.5); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .close-modal:hover { background: #ff4081; }
+        
+        /* ========== Auth Modal ========== */
+        .auth-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1001; justify-content: center; align-items: center; }
+        .auth-box { background: #1a1a1a; padding: 40px; border-radius: 24px; width: 400px; position: relative; animation: slideUp 0.3s ease; }
+        .auth-box h3 { color: #ff4081; margin-bottom: 20px; }
+        .auth-box input { width: 100%; padding: 14px; margin-bottom: 15px; background: #2a2a2a; border: 1px solid #444; color: white; border-radius: 12px; }
+        .close-auth { position: absolute; top: 20px; left: 20px; color: #aaa; cursor: pointer; font-size: 24px; }
+        .tabs { display: flex; margin-bottom: 20px; border-bottom: 1px solid #333; }
+        .tab { flex: 1; text-align: center; padding: 10px; cursor: pointer; color: #888; }
+        .tab.active { color: #ff4081; border-bottom: 2px solid #ff4081; }
+        
+        /* ========== Toast Notification ========== */
+        .toast { position: fixed; bottom: 30px; right: 30px; background: #2a2a2a; color: white; padding: 16px 24px; border-radius: 50px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 2000; animation: slideUp 0.3s ease; display: flex; align-items: center; gap: 12px; border-right: 4px solid #ff4081; }
+        .toast.success { border-right-color: #4caf50; }
+        .toast.error { border-right-color: #f44336; }
+        
+        /* ========== Footer ========== */
+        .footer { background: #1a1a1a; border-top: 1px solid #333; padding: 40px 30px 20px; margin-top: auto; }
+        .footer-content { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; }
+        .footer-section h3 { color: #ff4081; margin-bottom: 20px; }
+        .footer-section ul { list-style: none; }
+        .footer-section li { margin-bottom: 10px; }
+        .footer-section a { color: #aaa; text-decoration: none; transition: color 0.3s; }
+        .footer-section a:hover { color: #ff4081; }
+        .footer-bottom { text-align: center; padding-top: 30px; margin-top: 30px; border-top: 1px solid #333; color: #666; }
+        .social-links { display: flex; gap: 15px; margin-top: 15px; }
+        .social-links a { color: #aaa; font-size: 20px; transition: color 0.3s; }
+        .social-links a:hover { color: #ff4081; }
+        
+        /* ========== Animations ========== */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1a1a1a; }
+        ::-webkit-scrollbar-thumb { background: #ff4081; border-radius: 4px; }
     </style>
 </head>
-<body class="antialiased text-gray-800">
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="logo"><i class="fas fa-play-circle"></i> Vidora</div>
+        
+        <div class="auth-buttons" id="authButtons">
+            <button class="btn-outline" onclick="showAuthModal('login')"><i class="fas fa-sign-in-alt"></i> دخول</button>
+            <button class="btn-primary" onclick="showAuthModal('register')"><i class="fas fa-user-plus"></i> اشتراك</button>
+        </div>
+        
+        <div class="user-area" id="userArea" style="display: none;">
+            <span class="user-name" id="displayName"></span>
+            <button class="btn-outline" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> خروج</button>
+        </div>
+    </div>
 
-    <nav class="bg-white border-b sticky top-0 z-40">
-        <div class="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center">
-            <div class="flex items-center gap-2">
-                <i class="fas fa-cubes text-2xl text-blue-600"></i>
-                <span class="text-2xl font-black">قالبك<span class="text-blue-600">.</span></span>
+    <!-- Auth Modal -->
+    <div class="auth-modal" id="authModal">
+        <div class="auth-box">
+            <span class="close-auth" onclick="closeAuthModal()">&times;</span>
+            <h3><i class="fas fa-play-circle"></i> انضم إلى Vidora</h3>
+            
+            <div class="tabs">
+                <div class="tab active" onclick="switchAuthTab('login')">دخول</div>
+                <div class="tab" onclick="switchAuthTab('register')">اشتراك</div>
             </div>
-            <div class="hidden md:flex gap-6 font-medium">
-                <a href="#" class="hover:text-blue-600">الرئيسية</a>
-                <a href="#templates" class="hover:text-blue-600">القوالب</a>
-                <a href="#" id="contact-whatsapp" class="bg-green-500 text-white px-5 py-2 rounded-full text-sm hover:bg-green-600"><i class="fab fa-whatsapp ml-1"></i> واتساب</a>
-            </div>
+            
+            <form id="loginForm">
+                <input type="email" id="loginEmail" placeholder="البريد الإلكتروني" required>
+                <input type="password" id="loginPassword" placeholder="كلمة المرور" required>
+                <button type="submit" class="btn-primary" style="width: 100%;">دخول</button>
+            </form>
+            
+            <form id="registerForm" style="display: none;">
+                <input type="text" id="registerName" placeholder="الاسم المستعار" required>
+                <input type="email" id="registerEmail" placeholder="البريد الإلكتروني" required>
+                <input type="password" id="registerPassword" placeholder="كلمة المرور (6 أحرف)" required>
+                <button type="submit" class="btn-primary" style="width: 100%;">إنشاء حساب</button>
+            </form>
+            
+            <div id="authMessage" style="margin-top: 15px; text-align: center;"></div>
         </div>
-    </nav>
+    </div>
 
-    <section class="bg-white border-b py-20 text-center">
-        <h1 class="text-4xl md:text-6xl font-black mb-4">قوالب <span class="text-blue-600">جاهزة</span> للانطلاق</h1>
-        <p class="text-gray-600 max-w-2xl mx-auto mb-10">اختر قالبك، ادفع بـ USDT، واحصل على ملفاتك فوراً.</p>
-        <a href="#templates" class="btn-primary text-white px-8 py-4 rounded-full text-lg font-bold shadow-lg">استعرض القوالب</a>
-        <div class="mt-10 flex justify-center gap-3">
-            <span class="bg-gray-100 px-4 py-2 rounded-full text-sm"><i class="fab fa-bitcoin text-amber-500 ml-1"></i> USDT</span>
-            <span class="bg-gray-100 px-4 py-2 rounded-full text-sm"><i class="fas fa-infinity text-blue-500 ml-1"></i> رابط دائم</span>
-        </div>
-    </section>
-
-    <section id="templates" class="max-w-7xl mx-auto px-4 py-16">
-        <h2 class="text-3xl font-black text-center mb-12">القوالب المتاحة</h2>
-        <div id="templates-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="col-span-full text-center py-16 text-gray-400"><i class="fas fa-spinner fa-pulse text-2xl mb-3"></i><p>جاري التحميل...</p></div>
-        </div>
-    </section>
-
-    <div id="payment-modal" class="fixed inset-0 z-50 hidden items-center justify-center modal">
-        <div class="bg-white rounded-3xl p-8 max-w-lg w-full mx-4 shadow-2xl">
-            <div class="text-center">
-                <div class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl text-amber-600"><i class="fab fa-bitcoin"></i></div>
-                <h3 class="text-xl font-black mb-2">الدفع بـ USDT (TRC20)</h3>
-                <div class="bg-gray-50 p-4 rounded-xl border mb-4 text-sm">
-                    <p class="text-xs text-gray-500">عنوان المحفظة</p>
-                    <p class="font-mono font-bold break-all" id="wallet-address">TCzR1GcHwyQ3ZdEyCv8ZGzQkXx7w1zBeCX</p>
-                    <button onclick="copyWallet()" class="mt-2 text-blue-600 text-xs"><i class="far fa-copy ml-1"></i> نسخ</button>
+    <div class="main-container">
+        <!-- Admin Sidebar -->
+        <div class="admin-sidebar" id="adminSidebar">
+            <h3><i class="fas fa-crown"></i> لوحة التحكم</h3>
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalMembers">0</div>
+                    <div>👥 أعضاء</div>
                 </div>
-                <p class="text-gray-700 mb-4">المبلغ: <span id="modal-price" class="text-2xl font-black text-amber-600">$0</span></p>
-                <input type="hidden" id="selected-file">
-                <button onclick="confirmPayment()" class="w-full btn-primary text-white py-3 rounded-xl font-bold">تم الدفع، تحميل</button>
-                <button onclick="closeModal()" class="w-full text-gray-400 text-sm mt-2">إلغاء</button>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalVideos">0</div>
+                    <div>🎬 فيديو</div>
+                </div>
+            </div>
+            
+            <div class="section-title">👥 الأعضاء</div>
+            <div class="member-list" id="memberList"></div>
+            
+            <div class="section-title">🎬 جميع الفيديوهات</div>
+            <div class="video-list" id="adminVideoList"></div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content-area">
+            <div class="guest-message" id="guestMessage">
+                <p><i class="fas fa-eye"></i> أنت تشاهد كزائر. <strong>سجل الآن</strong> لرفع فيديوهاتك والتفاعل!</p>
+                <button class="btn-primary" onclick="showAuthModal('register')"><i class="fas fa-star"></i> اشترك مجاناً</button>
+            </div>
+            
+            <div class="upload-section" id="uploadSection">
+                <h2><i class="fas fa-cloud-upload-alt"></i> شارك فيديو جديد</h2>
+                <input type="file" id="videoFile" accept="video/*" style="margin: 20px 0; color: white;">
+                <input type="text" id="videoTitle" placeholder="عنوان الفيديو" style="padding: 12px; width: 100%; border-radius: 30px; border: none; background: #2a2a2a; color: white; margin-bottom: 15px;">
+                <button class="btn-primary" id="uploadBtn"><i class="fas fa-rocket"></i> رفع الفيديو</button>
+                <progress id="progressBar" value="0" max="100" style="width: 100%; margin-top: 20px; display: none;"></progress>
+                <p id="uploadStatus" style="color: #aaa; margin-top: 15px;"></p>
+            </div>
+
+            <h2><i class="fas fa-fire"></i> أحدث الفيديوهات</h2>
+            <div class="video-grid" id="videoGrid">
+                <div style="color: #aaa; text-align: center; grid-column: 1/-1; padding: 40px;">
+                    <i class="fas fa-spinner fa-spin"></i> جاري التحميل...
+                </div>
             </div>
         </div>
     </div>
 
-    <footer class="bg-gray-50 border-t py-8 text-center text-gray-500 text-sm">© 2026 قالبك. جميع الحقوق محفوظة.</footer>
-    <a href="https://wa.me/9647829219448" target="_blank" class="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 z-50"><i class="fab fa-whatsapp text-2xl"></i></a>
+    <!-- Video Modal -->
+    <div class="modal" id="videoModal">
+        <span class="close-modal" onclick="closeVideoModal()">&times;</span>
+        <div class="modal-content">
+            <div class="video-container">
+                <video id="modalVideo" controls playsinline></video>
+            </div>
+            <div class="video-info-panel">
+                <h2 class="video-title-large" id="modalVideoTitle"></h2>
+                <div style="color: #aaa; margin-bottom: 15px;">
+                    <span id="modalVideoUploader"></span> • 
+                    <span id="modalVideoDate"></span> • 
+                    <span><i class="fas fa-eye"></i> <span id="modalVideoViews">0</span> مشاهدة</span>
+                </div>
+                
+                <div class="video-actions">
+                    <div class="action-btn" id="modalLikeBtn" onclick="toggleLike()">
+                        <i class="far fa-heart"></i>
+                        <span id="modalLikesCount">0</span> إعجاب
+                    </div>
+                    <div class="action-btn" onclick="shareVideo()">
+                        <i class="fas fa-share"></i> مشاركة
+                    </div>
+                </div>
+                
+                <div class="comments-section">
+                    <div class="comments-title">
+                        <i class="fas fa-comments"></i>
+                        <span><span id="commentsCount">0</span> تعليقات</span>
+                    </div>
+                    
+                    <div id="commentFormContainer">
+                        <div class="comment-form">
+                            <input type="text" class="comment-input" id="commentInput" placeholder="أضف تعليقاً...">
+                            <button class="btn-primary" onclick="addComment()">نشر</button>
+                        </div>
+                    </div>
+                    
+                    <div class="comment-list" id="commentList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <script src="js/firebase-config.js"></script>
-    <script>
-        const WHATSAPP = '9647829219448';
-        document.getElementById('contact-whatsapp')?.addEventListener('click', (e) => { e.preventDefault(); window.open(`https://wa.me/${WHATSAPP}`); });
-        
-        const grid = document.getElementById('templates-grid');
-        const modal = document.getElementById('payment-modal');
-        const priceSpan = document.getElementById('modal-price');
-        const fileInput = document.getElementById('selected-file');
-        
-        database.ref('templates').on('value', snap => {
-            const data = snap.val();
-            grid.innerHTML = '';
-            if (!data) { grid.innerHTML = '<div class="col-span-full text-center py-16 text-gray-400">لا توجد قوالب.</div>'; return; }
-            Object.values(data).forEach(t => {
-                const card = document.createElement('div');
-                card.className = 'template-card bg-white rounded-2xl shadow-sm overflow-hidden';
-                card.innerHTML = `<div class="h-52 bg-gray-100"><img src="${t.image}" alt="${t.name}" class="w-full h-full object-cover"></div>
-                <div class="p-6">
-                    <div class="flex justify-between items-start mb-2"><h3 class="text-xl font-black">${t.name}</h3>${t.badge?`<span class="text-xs px-3 py-1 rounded-full ${t.badge==='بريميوم'?'bg-amber-100 text-amber-700':'bg-blue-100 text-blue-700'}">${t.badge}</span>`:''}</div>
-                    <p class="text-gray-500 text-sm mb-4">${t.category||''}</p>
-                    <div class="flex justify-between items-center"><span class="text-2xl font-black text-blue-600">$${t.price}</span></div>
-                    <button class="w-full btn-primary text-white py-3 rounded-xl mt-4" onclick="buy('${t.file}', ${t.price})">شراء بـ USDT</button>
-                </div>`;
-                grid.appendChild(card);
-            });
-        });
-        
-        window.buy = (file, price) => { fileInput.value = file; priceSpan.textContent = '$'+price; modal.classList.remove('hidden'); modal.classList.add('flex'); };
-        window.copyWallet = () => { navigator.clipboard.writeText(document.getElementById('wallet-address').textContent); alert('✅ تم النسخ'); };
-        window.confirmPayment = () => { const f = fileInput.value; if(f) { window.open(f, '_blank'); closeModal(); window.open(`https://wa.me/${WHATSAPP}?text=تم شراء قالب`); } else alert('خطأ'); };
-        window.closeModal = () => { modal.classList.add('hidden'); modal.classList.remove('flex'); };
-        modal.addEventListener('click', (e) => { if(e.target===modal) closeModal(); });
-    </script>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3><i class="fas fa-play-circle"></i> Vidora</h3>
+                <p style="color: #aaa;">منصة مشاركة الفيديو الأولى في العالم العربي. انشر إبداعك وشارك مع المجتمع.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>روابط سريعة</h3>
+                <ul>
+                    <li><a href="#">الرئيسية</a></li>
+                    <li><a href="#">الفيديوهات الرائجة</a></li>
+                    <li><a href="#">أحدث الفيديوهات</a></li>
+                    <li><a href="#">المبدعين</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>الدعم</h3>
+                <ul>
+                    <li><a href="#">مركز المساعدة</a></li>
+                    <li><a href="#">سياسة الخصوصية</a></li>
+                    <li><a href="#">شروط الاستخدام</a></li>
+                    <li><a href="#">اتصل بنا</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>إحصائيات</h3>
+                <ul style="color: #aaa;">
+                    <li><i class="fas fa-users"></i> <span id="footerMembers">0</span>+ عضو</li>
+                    <li><i class="fas fa-video"></i> <span id="footerVideos">0</span>+ فيديو</li>
+                    <li><i class="fas fa-eye"></i> <span id="footerViews">0</span>+ مشاهدة</li>
+                    <li><i class="fas fa-heart"></i> <span id="footerLikes">0</span>+ إعجاب</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 Vidora. جميع الحقوق محفوظة. صنع بكل ❤️</p>
+        </div>
+    </footer>
+
+    <!-- Plyr JS - مشغل فيديو احترافي -->
+    <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
