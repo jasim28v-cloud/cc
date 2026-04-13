@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة تحكم قالبك - رفع قالب جديد (Cloudinary)</title>
+    <title>لوحة تحكم قالبك - رفع قالب جديد</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
@@ -12,18 +14,20 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
     <!-- Cloudinary Upload Widget -->
     <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
-    <style>body { font-family: 'Tajawal', sans-serif; background: #f1f5f9; }</style>
+    <style>
+        body { font-family: 'Tajawal', sans-serif; background: #f1f5f9; }
+    </style>
 </head>
 <body class="antialiased p-6">
     <div class="max-w-2xl mx-auto">
         <div class="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
-            <h1 class="text-2xl font-black text-gray-900 mb-6">📤 رفع قالب جديد (Cloudinary)</h1>
+            <h1 class="text-2xl font-black text-gray-900 mb-6">📤 رفع قالب جديد</h1>
             
             <!-- إدخال كلمة المرور -->
             <div id="login-section">
                 <label class="block text-sm font-bold mb-2">كلمة المرور</label>
                 <input type="password" id="password-input" class="w-full p-3 border rounded-xl mb-4" placeholder="أدخل كلمة المرور">
-                <button onclick="login()" class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold">دخول</button>
+                <button onclick="login()" class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold shadow-md">دخول</button>
             </div>
 
             <!-- نموذج الرفع (مخفي حتى تسجيل الدخول) -->
@@ -64,7 +68,7 @@
                     <input type="hidden" id="uploaded-image-url" value="">
                 </div>
 
-                <!-- رفع ملف القالب (إلى Firebase Storage) -->
+                <!-- رفع ملف القالب -->
                 <div class="mb-6">
                     <label class="block text-sm font-bold mb-2">ملف القالب (index.html أو ZIP)</label>
                     <input type="file" id="template-file" accept=".html,.zip" class="w-full p-3 border rounded-xl">
@@ -93,11 +97,10 @@
             }
         }
 
-        // فتح نافذة Cloudinary لرفع الصورة
         function uploadImage() {
             const widget = cloudinary.createUploadWidget({
                 cloudName: 'dmdrxi9xl',
-                uploadPreset: 'go_45xx', // تأكدي من اسم الـ upload preset
+                uploadPreset: 'go_45xx',
                 sources: ['local', 'url'],
                 multiple: false,
                 clientAllowedFormats: ['jpg', 'jpeg', 'png', 'webp'],
@@ -135,22 +138,19 @@
             status.textContent = '⏳ جاري رفع ملف القالب...';
             
             try {
-                // رفع ملف القالب إلى Firebase Storage
                 const fileRef = storage.ref(`templates_files/${Date.now()}_${templateFile.name}`);
                 await fileRef.put(templateFile);
                 const fileUrl = await fileRef.getDownloadURL();
 
-                // حفظ البيانات في Realtime Database
                 const newTemplateRef = database.ref('templates').push();
                 await newTemplateRef.set({
                     name, price, category, badge, description: desc,
-                    image: imageUrl, // رابط Cloudinary
+                    image: imageUrl,
                     file: fileUrl,
                     createdAt: new Date().toISOString()
                 });
 
                 status.textContent = '✅ تم رفع القالب بنجاح! سيظهر في الموقع فوراً.';
-                // تفريغ الحقول
                 document.getElementById('template-name').value = '';
                 document.getElementById('template-price').value = '';
                 document.getElementById('template-category').value = '';
