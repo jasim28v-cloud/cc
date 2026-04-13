@@ -3,233 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>قالبك - قوالب فاخرة للبيع | USDT</title>
-    <!-- Tailwind CSS -->
+    <title>قالبك - قوالب جاهزة للبيع | USDT</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
-    <!-- Firebase SDK -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
     <style>
-        body { font-family: 'Tajawal', sans-serif; background: #f5f5f7; }
-        .glass-nav { background: rgba(255,255,255,0.8); backdrop-filter: blur(12px); }
-        .template-card { transition: all 0.3s ease; border: 1px solid rgba(0,0,0,0.04); }
-        .template-card:hover { transform: translateY(-8px); box-shadow: 0 30px 40px -15px rgba(0,0,0,0.1); border-color: #cbd5e1; }
-        .modal { background: rgba(0,0,0,0.4); backdrop-filter: blur(6px); }
-        .btn-primary { background: linear-gradient(135deg, #2563eb, #1e3a8a); }
-        .whatsapp-float { animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
+        body { font-family: 'Tajawal', sans-serif; background: #fff; }
+        .template-card { border: 1px solid #e5e7eb; transition: all 0.3s; }
+        .template-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05); border-color: #2563eb; }
+        .btn-primary { background: #2563eb; }
+        .btn-primary:hover { background: #1d4ed8; }
+        .modal { background: rgba(0,0,0,0.4); backdrop-filter: blur(4px); }
     </style>
 </head>
 <body class="antialiased text-gray-800">
 
-    <!-- شريط التنقل -->
-    <nav class="glass-nav border-b border-gray-200/50 sticky top-0 z-40">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex items-center gap-2">
-                    <i class="fas fa-crown text-2xl text-amber-500"></i>
-                    <span class="text-2xl font-black text-gray-900">قالبك<span class="text-blue-600">.</span></span>
-                </div>
-                <div class="hidden md:flex items-center gap-6 text-gray-600 font-medium">
-                    <a href="#" class="hover:text-blue-600">الرئيسية</a>
-                    <a href="#templates" class="hover:text-blue-600">القوالب</a>
-                    <a href="#" id="contact-whatsapp" class="bg-green-500 text-white px-5 py-2 rounded-full text-sm hover:bg-green-600 shadow-md shadow-green-200">
-                        <i class="fab fa-whatsapp ml-1"></i> واتساب
-                    </a>
-                </div>
+    <nav class="bg-white border-b sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <i class="fas fa-cubes text-2xl text-blue-600"></i>
+                <span class="text-2xl font-black">قالبك<span class="text-blue-600">.</span></span>
+            </div>
+            <div class="hidden md:flex gap-6 font-medium">
+                <a href="#" class="hover:text-blue-600">الرئيسية</a>
+                <a href="#templates" class="hover:text-blue-600">القوالب</a>
+                <a href="#" id="contact-whatsapp" class="bg-green-500 text-white px-5 py-2 rounded-full text-sm hover:bg-green-600"><i class="fab fa-whatsapp ml-1"></i> واتساب</a>
             </div>
         </div>
     </nav>
 
-    <!-- القسم الرئيسي -->
-    <section class="relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-blue-50 py-20 md:py-28 border-b border-gray-100">
-        <div class="absolute -top-40 -right-40 w-80 h-80 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
-        <div class="max-w-7xl mx-auto px-4 text-center relative">
-            <h1 class="text-4xl md:text-7xl font-black text-gray-900 mb-6 leading-tight">
-                قوالب <span class="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">فاخرة</span> <br> جاهزة للإطلاق
-            </h1>
-            <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-10">
-                ادفع بـ USDT واحصل على قالبك فوراً. دعم فني عبر الواتساب.
-            </p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <a href="#templates" class="btn-primary text-white px-8 py-4 rounded-full text-lg font-bold hover:opacity-90 transition shadow-xl shadow-blue-300">استعرض القوالب</a>
-                <a href="#" id="hero-whatsapp" class="bg-white border border-gray-300 text-gray-700 px-8 py-4 rounded-full text-lg font-bold hover:bg-gray-50 transition shadow-sm">
-                    <i class="fab fa-whatsapp text-green-500 ml-2"></i> تواصل واتساب
-                </a>
-            </div>
-            <div class="mt-12 flex flex-wrap justify-center gap-4">
-                <div class="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-5 py-2 rounded-full shadow-sm border border-gray-200">
-                    <img src="https://cryptologos.cc/logos/tether-usdt-logo.svg" class="w-5 h-5" alt="USDT">
-                    <span class="font-mono text-gray-700 text-sm">USDT (TRC20)</span>
-                </div>
-            </div>
+    <section class="bg-white border-b py-20 text-center">
+        <h1 class="text-4xl md:text-6xl font-black mb-4">قوالب <span class="text-blue-600">جاهزة</span> للانطلاق</h1>
+        <p class="text-gray-600 max-w-2xl mx-auto mb-10">اختر قالبك، ادفع بـ USDT، واحصل على ملفاتك فوراً.</p>
+        <a href="#templates" class="btn-primary text-white px-8 py-4 rounded-full text-lg font-bold shadow-lg">استعرض القوالب</a>
+        <div class="mt-10 flex justify-center gap-3">
+            <span class="bg-gray-100 px-4 py-2 rounded-full text-sm"><i class="fab fa-bitcoin text-amber-500 ml-1"></i> USDT</span>
+            <span class="bg-gray-100 px-4 py-2 rounded-full text-sm"><i class="fas fa-infinity text-blue-500 ml-1"></i> رابط دائم</span>
         </div>
     </section>
 
-    <!-- قسم القوالب -->
-    <section id="templates" class="max-w-7xl mx-auto px-4 py-20">
-        <div class="text-center mb-14">
-            <h2 class="text-3xl md:text-5xl font-black text-gray-900 mb-3">مجموعتنا الحصرية</h2>
-            <p class="text-gray-500 text-lg">اختر القالب الذي يناسب ذوقك وابدأ اليوم.</p>
-        </div>
-
-        <div id="templates-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="col-span-full text-center py-16">
-                <div class="inline-flex items-center gap-3 text-gray-400">
-                    <i class="fas fa-spinner fa-pulse text-2xl"></i>
-                    <span>جاري تحميل القوالب...</span>
-                </div>
-            </div>
+    <section id="templates" class="max-w-7xl mx-auto px-4 py-16">
+        <h2 class="text-3xl font-black text-center mb-12">القوالب المتاحة</h2>
+        <div id="templates-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="col-span-full text-center py-16 text-gray-400"><i class="fas fa-spinner fa-pulse text-2xl mb-3"></i><p>جاري التحميل...</p></div>
         </div>
     </section>
 
-    <!-- نافذة الدفع -->
     <div id="payment-modal" class="fixed inset-0 z-50 hidden items-center justify-center modal">
-        <div class="bg-white rounded-3xl p-8 max-w-lg w-full mx-4 shadow-2xl border border-gray-100">
+        <div class="bg-white rounded-3xl p-8 max-w-lg w-full mx-4 shadow-2xl">
             <div class="text-center">
-                <div class="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-5 text-3xl text-amber-600">
-                    <i class="fab fa-bitcoin"></i>
+                <div class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl text-amber-600"><i class="fab fa-bitcoin"></i></div>
+                <h3 class="text-xl font-black mb-2">الدفع بـ USDT (TRC20)</h3>
+                <div class="bg-gray-50 p-4 rounded-xl border mb-4 text-sm">
+                    <p class="text-xs text-gray-500">عنوان المحفظة</p>
+                    <p class="font-mono font-bold break-all" id="wallet-address">TCzR1GcHwyQ3ZdEyCv8ZGzQkXx7w1zBeCX</p>
+                    <button onclick="copyWallet()" class="mt-2 text-blue-600 text-xs"><i class="far fa-copy ml-1"></i> نسخ</button>
                 </div>
-                <h3 class="text-2xl font-black text-gray-900 mb-2">الدفع بـ USDT (TRC20)</h3>
-                <p class="text-gray-500 text-sm mb-6">أرسل المبلغ إلى المحفظة، ثم اضغط "تم الدفع".</p>
-                
-                <div class="bg-gray-50 p-5 rounded-2xl border border-gray-200 mb-4">
-                    <p class="text-xs text-gray-500 mb-1">عنوان المحفظة:</p>
-                    <p class="font-mono text-sm font-bold text-gray-800 break-all" id="wallet-address">TCzR1GcHwyQ3ZdEyCv8ZGzQkXx7w1zBeCX</p>
-                    <button onclick="copyWallet()" class="mt-3 text-blue-600 text-xs font-medium"><i class="far fa-copy ml-1"></i> نسخ</button>
-                </div>
-
-                <div class="bg-amber-50 p-4 rounded-2xl border border-amber-200 mb-6">
-                    <span class="text-gray-700">المبلغ: <span id="modal-price" class="text-2xl font-black text-amber-600">$0</span></span>
-                </div>
-
-                <input type="hidden" id="selected-template-file" value="">
-                
-                <button onclick="confirmPayment()" class="w-full btn-primary text-white py-3 rounded-xl font-bold text-lg shadow-lg shadow-blue-200 mb-2">
-                    تم الدفع، افتح القالب
-                </button>
-                <button onclick="closeModal()" class="w-full text-gray-400 text-sm py-2">إلغاء</button>
+                <p class="text-gray-700 mb-4">المبلغ: <span id="modal-price" class="text-2xl font-black text-amber-600">$0</span></p>
+                <input type="hidden" id="selected-file">
+                <button onclick="confirmPayment()" class="w-full btn-primary text-white py-3 rounded-xl font-bold">تم الدفع، تحميل</button>
+                <button onclick="closeModal()" class="w-full text-gray-400 text-sm mt-2">إلغاء</button>
             </div>
         </div>
     </div>
 
-    <!-- تذييل -->
-    <footer class="bg-gray-900 text-white py-12 mt-10">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <div class="flex justify-center items-center gap-2 mb-6">
-                <i class="fas fa-crown text-2xl text-amber-400"></i>
-                <span class="text-2xl font-black">قالبك<span class="text-amber-400">.</span></span>
-            </div>
-            <p class="text-gray-400 text-sm">© 2026 قالبك. الدفع الآمن عبر USDT. الدعم الفني عبر الواتساب.</p>
-        </div>
-    </footer>
-
-    <!-- زر واتساب عائم -->
-    <a href="https://wa.me/9647829219448" target="_blank" class="whatsapp-float fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition z-50">
-        <i class="fab fa-whatsapp text-2xl"></i>
-    </a>
+    <footer class="bg-gray-50 border-t py-8 text-center text-gray-500 text-sm">© 2026 قالبك. جميع الحقوق محفوظة.</footer>
+    <a href="https://wa.me/9647829219448" target="_blank" class="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 z-50"><i class="fab fa-whatsapp text-2xl"></i></a>
 
     <script src="js/firebase-config.js"></script>
     <script>
-        const WHATSAPP_NUMBER = '9647829219448';
+        const WHATSAPP = '9647829219448';
+        document.getElementById('contact-whatsapp')?.addEventListener('click', (e) => { e.preventDefault(); window.open(`https://wa.me/${WHATSAPP}`); });
         
-        document.querySelectorAll('#contact-whatsapp, #hero-whatsapp').forEach(el => {
-            el.addEventListener('click', (e) => {
-                e.preventDefault();
-                window.open(`https://wa.me/${WHATSAPP_NUMBER}`, '_blank');
-            });
-        });
-
-        const gridContainer = document.getElementById('templates-grid');
+        const grid = document.getElementById('templates-grid');
         const modal = document.getElementById('payment-modal');
-        const modalPrice = document.getElementById('modal-price');
-        const selectedFileInput = document.getElementById('selected-template-file');
-        let currentTemplatePrice = 0;
-
-        const templatesRef = database.ref('templates');
+        const priceSpan = document.getElementById('modal-price');
+        const fileInput = document.getElementById('selected-file');
         
-        templatesRef.on('value', (snapshot) => {
-            const templates = snapshot.val();
-            gridContainer.innerHTML = '';
-
-            if (!templates) {
-                gridContainer.innerHTML = '<div class="col-span-full text-center py-16 text-gray-400">لا توجد قوالب حالياً.</div>';
-                return;
-            }
-
-            const templatesArray = Object.values(templates);
-            
-            templatesArray.forEach((template) => {
+        database.ref('templates').on('value', snap => {
+            const data = snap.val();
+            grid.innerHTML = '';
+            if (!data) { grid.innerHTML = '<div class="col-span-full text-center py-16 text-gray-400">لا توجد قوالب.</div>'; return; }
+            Object.values(data).forEach(t => {
                 const card = document.createElement('div');
-                card.className = 'template-card bg-white rounded-3xl shadow-sm overflow-hidden';
-                
-                let badgeHtml = '';
-                if (template.badge) {
-                    let badgeClass = 'bg-green-100 text-green-700';
-                    if (template.badge === 'بريميوم') badgeClass = 'bg-gradient-to-r from-amber-400 to-amber-600 text-white';
-                    else if (template.badge === 'جديد') badgeClass = 'bg-blue-100 text-blue-700';
-                    badgeHtml = `<span class="${badgeClass} text-xs font-bold px-3 py-1 rounded-full">${template.badge}</span>`;
-                }
-                
-                card.innerHTML = `
-                    <div class="h-56 overflow-hidden bg-gray-100">
-                        <img src="${template.image}" alt="${template.name}" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-black text-gray-900">${template.name}</h3>
-                            ${badgeHtml}
-                        </div>
-                        <p class="text-gray-500 text-sm mb-5">${template.category || 'قالب احترافي'}</p>
-                        <div class="flex justify-between items-center mb-5">
-                            <span class="text-3xl font-black text-blue-600">$${template.price}</span>
-                        </div>
-                        <div class="flex gap-3">
-                            <button onclick="buyTemplate('${template.file}', ${template.price})" class="flex-1 btn-primary text-white py-3 rounded-xl font-medium transition shadow-md shadow-blue-200">شراء بـ USDT</button>
-                        </div>
-                    </div>
-                `;
-                gridContainer.appendChild(card);
+                card.className = 'template-card bg-white rounded-2xl shadow-sm overflow-hidden';
+                card.innerHTML = `<div class="h-52 bg-gray-100"><img src="${t.image}" alt="${t.name}" class="w-full h-full object-cover"></div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-2"><h3 class="text-xl font-black">${t.name}</h3>${t.badge?`<span class="text-xs px-3 py-1 rounded-full ${t.badge==='بريميوم'?'bg-amber-100 text-amber-700':'bg-blue-100 text-blue-700'}">${t.badge}</span>`:''}</div>
+                    <p class="text-gray-500 text-sm mb-4">${t.category||''}</p>
+                    <div class="flex justify-between items-center"><span class="text-2xl font-black text-blue-600">$${t.price}</span></div>
+                    <button class="w-full btn-primary text-white py-3 rounded-xl mt-4" onclick="buy('${t.file}', ${t.price})">شراء بـ USDT</button>
+                </div>`;
+                grid.appendChild(card);
             });
         });
-
-        window.buyTemplate = (templateFile, price) => {
-            currentTemplatePrice = price;
-            selectedFileInput.value = templateFile;
-            modalPrice.textContent = `$${price}`;
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-        };
-
-        window.copyWallet = () => {
-            const wallet = document.getElementById('wallet-address').textContent;
-            navigator.clipboard.writeText(wallet);
-            alert('✅ تم نسخ عنوان المحفظة!');
-        };
-
-        window.confirmPayment = () => {
-            const templateFile = selectedFileInput.value;
-            if (templateFile) {
-                window.open(templateFile, '_blank');
-                closeModal();
-                window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=تم شراء قالب، هل يمكنكم المساعدة؟`, '_blank');
-            } else {
-                alert('حدث خطأ، الرجاء التواصل عبر الواتساب.');
-            }
-        };
-
-        window.closeModal = () => {
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-        };
-
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) closeModal();
-        });
+        
+        window.buy = (file, price) => { fileInput.value = file; priceSpan.textContent = '$'+price; modal.classList.remove('hidden'); modal.classList.add('flex'); };
+        window.copyWallet = () => { navigator.clipboard.writeText(document.getElementById('wallet-address').textContent); alert('✅ تم النسخ'); };
+        window.confirmPayment = () => { const f = fileInput.value; if(f) { window.open(f, '_blank'); closeModal(); window.open(`https://wa.me/${WHATSAPP}?text=تم شراء قالب`); } else alert('خطأ'); };
+        window.closeModal = () => { modal.classList.add('hidden'); modal.classList.remove('flex'); };
+        modal.addEventListener('click', (e) => { if(e.target===modal) closeModal(); });
     </script>
 </body>
 </html>
