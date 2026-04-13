@@ -1,4 +1,8 @@
-// js/firebase-config.js
+// firebase-config.js
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getDatabase } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyCT0GTVZSv3d48qP3_2auOtibkjD00cUMA",
   authDomain: "gomrka-420d0.firebaseapp.com",
@@ -10,6 +14,11 @@ const firebaseConfig = {
   measurementId: "G-61DFP9M8BQ"
 };
 
-firebase.initializeApp(firebaseConfig);
-const database = firebase.database();
-console.log("✅ Firebase Connected");
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const database = getDatabase(app);
+
+const CLOUDINARY_CLOUD_NAME = 'dmdrxi9xl';
+const CLOUDINARY_UPLOAD_PRESET = 'go_45xx';
+
+export { auth, database, CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET };
