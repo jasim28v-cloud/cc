@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
-    <!-- Firebase SDK (Compat version for browser) -->
+    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
     <style>
@@ -26,7 +26,7 @@
 </head>
 <body class="antialiased text-gray-800">
 
-    <!-- ==================== شريط التنقل ==================== -->
+    <!-- شريط التنقل -->
     <nav class="glass-nav border-b border-gray-200/50 sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
@@ -35,21 +35,20 @@
                     <span class="text-2xl font-black text-gray-900">قالبك<span class="text-blue-600">.</span></span>
                 </div>
                 <div class="hidden md:flex items-center gap-6 text-gray-600 font-medium">
-                    <a href="#" class="hover:text-blue-600 transition">الرئيسية</a>
-                    <a href="#templates" class="hover:text-blue-600 transition">القوالب</a>
-                    <a href="#" id="contact-whatsapp" class="bg-green-500 text-white px-5 py-2 rounded-full text-sm hover:bg-green-600 transition shadow-md shadow-green-200">
+                    <a href="#" class="hover:text-blue-600">الرئيسية</a>
+                    <a href="#templates" class="hover:text-blue-600">القوالب</a>
+                    <a href="#" id="contact-whatsapp" class="bg-green-500 text-white px-5 py-2 rounded-full text-sm hover:bg-green-600 shadow-md shadow-green-200">
                         <i class="fab fa-whatsapp ml-1"></i> واتساب
                     </a>
                 </div>
-                <button class="md:hidden text-gray-600"><i class="fas fa-bars text-xl"></i></button>
             </div>
         </div>
     </nav>
 
-    <!-- ==================== القسم الرئيسي ==================== -->
+    <!-- القسم الرئيسي -->
     <section class="relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-blue-50 py-20 md:py-28 border-b border-gray-100">
         <div class="absolute -top-40 -right-40 w-80 h-80 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
+        <div class="max-w-7xl mx-auto px-4 text-center relative">
             <h1 class="text-4xl md:text-7xl font-black text-gray-900 mb-6 leading-tight">
                 قوالب <span class="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">فاخرة</span> <br> جاهزة للإطلاق
             </h1>
@@ -67,16 +66,12 @@
                     <img src="https://cryptologos.cc/logos/tether-usdt-logo.svg" class="w-5 h-5" alt="USDT">
                     <span class="font-mono text-gray-700 text-sm">USDT (TRC20)</span>
                 </div>
-                <div class="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-5 py-2 rounded-full shadow-sm border border-gray-200">
-                    <i class="fas fa-cloud-upload-alt text-blue-500"></i>
-                    <span class="text-sm">صور عالية الجودة</span>
-                </div>
             </div>
         </div>
     </section>
 
-    <!-- ==================== قسم القوالب ==================== -->
-    <section id="templates" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <!-- قسم القوالب -->
+    <section id="templates" class="max-w-7xl mx-auto px-4 py-20">
         <div class="text-center mb-14">
             <h2 class="text-3xl md:text-5xl font-black text-gray-900 mb-3">مجموعتنا الحصرية</h2>
             <p class="text-gray-500 text-lg">اختر القالب الذي يناسب ذوقك وابدأ اليوم.</p>
@@ -86,13 +81,13 @@
             <div class="col-span-full text-center py-16">
                 <div class="inline-flex items-center gap-3 text-gray-400">
                     <i class="fas fa-spinner fa-pulse text-2xl"></i>
-                    <span>جاري تحميل القوالب من Cloudinary...</span>
+                    <span>جاري تحميل القوالب...</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ==================== نافذة الدفع ==================== -->
+    <!-- نافذة الدفع -->
     <div id="payment-modal" class="fixed inset-0 z-50 hidden items-center justify-center modal">
         <div class="bg-white rounded-3xl p-8 max-w-lg w-full mx-4 shadow-2xl border border-gray-100">
             <div class="text-center">
@@ -122,7 +117,7 @@
         </div>
     </div>
 
-    <!-- ==================== تذييل ==================== -->
+    <!-- تذييل -->
     <footer class="bg-gray-900 text-white py-12 mt-10">
         <div class="max-w-7xl mx-auto px-4 text-center">
             <div class="flex justify-center items-center gap-2 mb-6">
@@ -138,17 +133,10 @@
         <i class="fab fa-whatsapp text-2xl"></i>
     </a>
 
-    <!-- ==================== JavaScript ==================== -->
     <script src="js/firebase-config.js"></script>
     <script>
-        // ==================== إعدادات Cloudinary ====================
-        const CLOUDINARY_CLOUD_NAME = 'dmdrxi9xl';
-        const CLOUDINARY_COLLECTION = 'collection';
-        
-        // رقم الواتساب
         const WHATSAPP_NUMBER = '9647829219448';
         
-        // روابط الواتساب
         document.querySelectorAll('#contact-whatsapp, #hero-whatsapp').forEach(el => {
             el.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -156,14 +144,12 @@
             });
         });
 
-        // ==================== المتغيرات ====================
         const gridContainer = document.getElementById('templates-grid');
         const modal = document.getElementById('payment-modal');
         const modalPrice = document.getElementById('modal-price');
         const selectedFileInput = document.getElementById('selected-template-file');
         let currentTemplatePrice = 0;
 
-        // ==================== جلب القوالب من Firebase ====================
         const templatesRef = database.ref('templates');
         
         templatesRef.on('value', (snapshot) => {
@@ -171,7 +157,7 @@
             gridContainer.innerHTML = '';
 
             if (!templates) {
-                gridContainer.innerHTML = '<div class="col-span-full text-center py-16 text-gray-400">لا توجد قوالب حالياً. تواصل معنا عبر الواتساب لطلب قالب مخصص.</div>';
+                gridContainer.innerHTML = '<div class="col-span-full text-center py-16 text-gray-400">لا توجد قوالب حالياً.</div>';
                 return;
             }
 
@@ -180,12 +166,6 @@
             templatesArray.forEach((template) => {
                 const card = document.createElement('div');
                 card.className = 'template-card bg-white rounded-3xl shadow-sm overflow-hidden';
-                
-                // تحسين رابط الصورة لاستخدام Cloudinary (إذا كان رابطاً نسبياً)
-                let imageUrl = template.image;
-                if (imageUrl && !imageUrl.startsWith('http')) {
-                    imageUrl = `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/${imageUrl}`;
-                }
                 
                 let badgeHtml = '';
                 if (template.badge) {
@@ -197,7 +177,7 @@
                 
                 card.innerHTML = `
                     <div class="h-56 overflow-hidden bg-gray-100">
-                        <img src="${imageUrl}" alt="${template.name}" class="w-full h-full object-cover">
+                        <img src="${template.image}" alt="${template.name}" class="w-full h-full object-cover">
                     </div>
                     <div class="p-6">
                         <div class="flex justify-between items-start mb-2">
@@ -209,7 +189,6 @@
                             <span class="text-3xl font-black text-blue-600">$${template.price}</span>
                         </div>
                         <div class="flex gap-3">
-                            <button onclick="openTemplate('${template.demoFile}')" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 rounded-xl font-medium transition">معاينة</button>
                             <button onclick="buyTemplate('${template.file}', ${template.price})" class="flex-1 btn-primary text-white py-3 rounded-xl font-medium transition shadow-md shadow-blue-200">شراء بـ USDT</button>
                         </div>
                     </div>
@@ -217,12 +196,6 @@
                 gridContainer.appendChild(card);
             });
         });
-
-        // ==================== وظائف القوالب ====================
-        window.openTemplate = (demoFile) => {
-            if (demoFile) window.open(demoFile, '_blank');
-            else alert('المعاينة غير متاحة حالياً.');
-        };
 
         window.buyTemplate = (templateFile, price) => {
             currentTemplatePrice = price;
@@ -232,7 +205,6 @@
             modal.classList.add('flex');
         };
 
-        // ==================== وظائف الدفع ====================
         window.copyWallet = () => {
             const wallet = document.getElementById('wallet-address').textContent;
             navigator.clipboard.writeText(wallet);
@@ -244,10 +216,9 @@
             if (templateFile) {
                 window.open(templateFile, '_blank');
                 closeModal();
-                // فتح واتساب تلقائياً للدعم بعد الشراء (اختياري)
-                // window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=تم شراء قالب`, '_blank');
+                window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=تم شراء قالب، هل يمكنكم المساعدة؟`, '_blank');
             } else {
-                alert('حدث خطأ، حاول مرة أخرى.');
+                alert('حدث خطأ، الرجاء التواصل عبر الواتساب.');
             }
         };
 
